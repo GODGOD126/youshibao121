@@ -1,51 +1,29 @@
-import { StrategyMode } from '@interfaces';
+// 此文件用于配置和初始化 Google API 的连接
 
-// read apiKey from env/process.env
-export const apiKeys =
-  (import.meta.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY)?.split(',') ??
-  [];
+// 从环境变量中读取 Google API 密钥
+export const apiKey = import.meta.env.GOOGLE_API_KEY;
 
-// read disableProxy from env
-export const disableProxy = import.meta.env.DISABLE_LOCAL_PROXY === 'true';
+// 设置默认的模型名称，确保这是 Google API 支持的模型
+export const defaultModel = 'gemini-pro';
 
-// read localProxy from env
-export const localProxy = import.meta.env.LOCAL_PROXY;
+// 定义一个数组，列出所有支持的模型
+export const supportedModels = [
+  'gemini-pro',
+  // 你可以在这里添加更多 Google 支持的模型
+];
 
-export const apiBaseUrl =
-  import.meta.env.OPENAI_API_BASE_URL ||
-  process.env.OPENAI_API_BASE_URL ||
-  'api.openai.com';
+// 读取环境变量中的密码（如果你的应用需要）
+export const password = process.env.PASSWORD || '';
 
-// use proxy in local env
-export const baseURL = (
-  process.env.NODE_ENV === 'development' && !disableProxy
-    ? localProxy
-    : apiBaseUrl
-)?.replace(/^https?:\/\//i, '');
-
-export const apiKeyStrategy: StrategyMode =
-  import.meta.env.API_KEY_STRATEGY || process.env.API_KEY_STRATEGY || 'random';
-
-export const password = import.meta.env.PASSWORD || process.env.PASSWORD;
-
-// model midjourney configs
-export const dicordServerId =
-  import.meta.env.DISCORD_SERVER_ID || process.env.DISCORD_SERVER_ID;
-
-export const discordChannelId =
-  import.meta.env.DISCORD_CHANNEL_ID || process.env.DISCORD_CHANNEL_ID;
-
-export const discordToken =
-  import.meta.env.DISCORD_TOKEN || process.env.DISCORD_TOKEN;
-
+// 如果你的应用涉及到 Discord 集成，保留这些配置
+export const discordServerId = process.env.DISCORD_SERVER_ID || '';
+export const discordChannelId = process.env.DISCORD_CHANNEL_ID || '';
+export const discordToken = process.env.DISCORD_TOKEN || '';
 export const discordImageProxy = (
-  import.meta.env.DISCORD_IMAGE_PROXY || process.env.DISCORD_IMAGE_PROXY
-)?.replace(/^https?:\/\//i, '');
+  process.env.DISCORD_IMAGE_PROXY || ''
+).replace(/^https?:\/\//i, '');
 
-/**
- * https://vercel.com/docs/concepts/edge-network/regions#region-list
- * disable hkg1 HongKong
- */
+// 应用的运行时配置和地区限制
 export const config = {
   runtime: 'edge',
   regions: [
