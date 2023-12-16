@@ -1,13 +1,8 @@
 /* eslint-disable no-console */
 import type { APIRoute } from 'astro';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { bootstrap } from 'global-agent';
+
 import { apiKey, defaultModel, supportedModels } from '.';
-
-bootstrap();
-
-process.env.GLOBAL_AGENT_HTTP_PROXY = 'http://127.0.0.1:21882';
-process.env.GLOBAL_AGENT_HTTPS_PROXY = 'http://127.0.0.1:21882';
 
 export const post: APIRoute = async ({ request }) => {
   const body = await request.json();
