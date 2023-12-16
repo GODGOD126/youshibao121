@@ -8,16 +8,6 @@ export const post: APIRoute = async ({ request }) => {
   const body = await request.json();
   const { messages, password } = body;
 
-  if (password !== apiKey) {
-    console.log('Invalid password'); // Debugging line
-    return new Response(
-      JSON.stringify({ msg: 'No password or wrong password' }),
-      {
-        status: 401,
-      }
-    );
-  }
-
   const model = body.model || defaultModel;
 
   if (!supportedModels.includes(model)) {
